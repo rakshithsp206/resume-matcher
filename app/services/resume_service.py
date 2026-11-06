@@ -2,7 +2,8 @@ from utils.text_extracter import extract_text_from_pdf
 from models.tfidf_model import vectorise
 from models.similarity_model import calculate_similarity
 from utils.text_preprocessor import preprocess_text
-    
+from models.semantic_model import get_embeddings
+
 def get_similarity_score(pdf_bytes, job_desc):
 
     # Extract text from the uploaded resume PDF
@@ -16,9 +17,9 @@ def get_similarity_score(pdf_bytes, job_desc):
     documents = [resume_text, job_desc]
 
     # Vectorize the documents using TF-IDF
-    tfidf_matrix = vectorise(documents)
+    embeddings = get_embeddings(documents)
 
     # Calculate the similarity score using cosine similarity
-    similarity_score = calculate_similarity(tfidf_matrix)
+    similarity_score = calculate_similarity(embeddings)
 
     return similarity_score

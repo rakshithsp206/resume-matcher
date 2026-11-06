@@ -5,9 +5,6 @@ import nltk
 from nltk.corpus import stopwords
 from nltk.tokenize import wordpunct_tokenize
 
-# Download stopwords
-nltk.download("stopwords")
-
 stop_words = set(stopwords.words("english"))
 
 def preprocess_text(text: str) -> str:
