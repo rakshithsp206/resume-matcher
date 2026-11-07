@@ -1,6 +1,6 @@
 import pymupdf
 
-def extract_text_from_pdf(pdf_bytes):
+def extract_text_from_pdf(pdf_bytes: bytes) -> str:
     doc = pymupdf.open(stream=pdf_bytes, filetype="pdf")
 
     extracted_text = ""

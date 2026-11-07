@@ -10,7 +10,7 @@ nltk.download("stopwords")
 stop_words = set(stopwords.words("english"))
 
 # Preserve important technical terms
-def normalize_technical_terms(text):
+def normalize_technical_terms(text: str) -> str:
     replacements = {
         "c++": "cpp",
         "c#": "csharp",
@@ -22,7 +22,7 @@ def normalize_technical_terms(text):
 
     return text
 
-def preprocess_text(text):
+def preprocess_text(text: str) -> str:
 
     # 1. Convert to lowercase
     text = text.lower()

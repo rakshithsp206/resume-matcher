@@ -38,5 +38,5 @@ def compare_skills(resume_skills: dict, job_skills: dict):
         "matched_skills": sorted(matched),
         "missing_skills": sorted(missing),
         "additional_skills": sorted(additional),
-        "match_percentage": round(match_percentage, 2)
+        "skill_match_percentage": round(match_percentage, 2)
     }

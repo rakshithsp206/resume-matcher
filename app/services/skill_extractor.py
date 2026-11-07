@@ -1,7 +1,7 @@
 
 import re
 
-from models.skill_data import SKILL_DATA
+from app.models.skill_data import SKILL_DATA
 
 
 def extract_skills(text: str):
