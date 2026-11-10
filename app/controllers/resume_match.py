@@ -2,6 +2,8 @@ from app.services.resume_service import get_similarity_score
 from app.services.skill_service import get_skills_compared
 from app.services.match_engine import match_percentage
 from app.schemas.response import ResumeMatchResponse
+from app.services.project_service import get_projects_data
+from app.services.project_relevance import get_avg_relevance
 
 async def match_resume(file: UploadFile, job_desc: str)-> ResumeMatchResponse:
     pdf_bytes = await file.read()  # Read the uploaded file as bytes
@@ -10,10 +12,13 @@ async def match_resume(file: UploadFile, job_desc: str)-> ResumeMatchResponse:
 
     skill_comparison = get_skills_compared(pdf_bytes, job_desc)
     
-    overall_match_percentage = match_percentage(semantic_similarity_percent, skill_comparison.skill_match_percentage)
+    projects_data = get_projects_data(pdf_bytes, job_desc)
+
+    overall_match_percentage = match_percentage(semantic_similarity_percent, skill_comparison.skill_match_percentage,get_avg_relevance(projects_data))
 
     return ResumeMatchResponse(
         semantic_match_percentage=semantic_similarity_percent,
         skills=skill_comparison,
+        projects=projects_data,
         overall_match_percentage=overall_match_percentage
     )
