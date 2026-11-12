@@ -22,7 +22,7 @@ database = client[DATABASE_NAME]
 
 # User collection
 users_collection = database["users"]
-
+analysis_collection = database["analysis"]
 
 def test_connection():
     try:

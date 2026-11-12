@@ -13,6 +13,8 @@ class ProjectsResponse(BaseModel):
     relevance: float = Field(ge=0, le=100, description="Relevance score of the project to the job description.")
     
 class ResumeMatchResponse(BaseModel):
+    job_title: str = Field(..., description="The title of the job for which the resume is being matched.")
+    company_name: str = Field(..., description="The name of the company offering the job.")
     semantic_match_percentage: float = Field(ge=0, le=100, description="Percentage of semantic similarity between the resume and job description.")
     skills: SkillComparisonResponse = Field(..., description="Detailed skill comparison between the resume and job description.")
     projects: list[ProjectsResponse] = Field(..., description="List of projects extracted from the resume.")
