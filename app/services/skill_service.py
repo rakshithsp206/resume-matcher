@@ -4,10 +4,7 @@ from app.services.skill_extractor import extract_skills
 from app.services.skill_comparator import compare_skills
 from app.schemas.response import SkillComparisonResponse
 
-def get_skills_compared(pdf_bytes: bytes, job_desc: str) -> SkillComparisonResponse:
-    # Extract text from the uploaded resume PDF
-    resume_text = extract_text_from_pdf(pdf_bytes)
-
+def get_skills_compared(resume_text: str, job_desc: str) -> SkillComparisonResponse:
     # Preprocess the extracted text and job description
     preprocessed_resume = preprocess_text(resume_text)
     preprocessed_job_desc = preprocess_text(job_desc)

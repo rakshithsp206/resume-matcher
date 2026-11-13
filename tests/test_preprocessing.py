@@ -1,47 +1,54 @@
 
-import re
-import nltk
+import pytest
 
-from nltk.corpus import stopwords
-from nltk.tokenize import wordpunct_tokenize
-
-stop_words = set(stopwords.words("english"))
-
-def preprocess_text(text: str) -> str:
-
-    # 1. Convert to lowercase
-    text = text.lower()
-
-    # 2. Remove URLs
-    text = re.sub(r"http\S+|www\S+", "", text)
-
-    # 3. Remove email addresses
-    text = re.sub(r"\S+@\S+", "", text)
-
-    # 4. Remove special characters
-    text = re.sub(r"[^a-zA-Z0-9\s]", " ", text)
-
-    # 5. Tokenization
-    tokens = wordpunct_tokenize(text)
-
-    # 6. Remove stopwords
-    tokens = [
-        word for word in tokens
-        if word not in stop_words
-    ]
-
-    return " ".join(tokens)
+from app.utils.text_preprocessor import preprocess_text
 
 
-sample_text = """
-Experienced Python Developer with 2+ years of experience.
-Skilled in Python, Machine Learning, SQL, and Data Analysis.
-"""
+def test_lowercase_conversion():
+    result = preprocess_text("PYTHON DEVELOPER")
 
-cleaned_text = preprocess_text(sample_text)
+    assert result == "python developer"
 
-print("Original Text:")
-print(sample_text)
 
-print("\nPreprocessed Text:")
-print(cleaned_text)
+def test_stopword_removal():
+    result = preprocess_text("The developer is working")
+
+    assert result == "developer working"
+
+
+def test_url_removal():
+    result = preprocess_text(
+        "Visit https://example.com for more information"
+    )
+
+    assert "https" not in result
+    assert "example" not in result
+    assert "information" in result
+
+
+def test_email_removal():
+    result = preprocess_text(
+        "Contact me at test@example.com"
+    )
+
+    assert "test" not in result
+    assert "example" not in result
+    assert "contact" in result
+
+
+def test_technical_term_normalization():
+    result = preprocess_text("C++ C# Node.js")
+
+    assert result == "cpp csharp nodejs"
+
+
+def test_special_character_removal():
+    result = preprocess_text("Python??? Developer!!!")
+
+    assert result == "python developer"
+
+
+def test_empty_string():
+    result = preprocess_text("")
+
+    assert result == ""

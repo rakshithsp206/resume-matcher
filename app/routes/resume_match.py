@@ -8,4 +8,4 @@ router = APIRouter()
 
 @router.post("/resume")
 async def upload_resume(file: UploadFile = File(...), job_desc: JobDescription = Form(...),user:dict = Depends(get_current_user))-> ResumeMatchResponse:
-    return await match_resume(file, job_desc)
+    return await match_resume(file, job_desc, user)

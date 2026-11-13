@@ -4,8 +4,7 @@ from app.services.project_relevance import calculate_projects_relevance
 from app.utils.text_extracter import extract_text_from_pdf
 from app.utils.text_preprocessor import preprocess_text
 
-def get_projects_data(pdf_bytes: bytes, job_description: str) -> list[dict[str, str]]:
-    resume_text = extract_text_from_pdf(pdf_bytes)
+def get_projects_data(resume_text: str, job_description: str) -> list[dict[str, str]]:
     job_description = preprocess_text(job_description)
 
     projects = extract_individual_projects(resume_text)
